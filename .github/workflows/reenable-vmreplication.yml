@@ -1,1 +1,82 @@
+name: Azure Site Recovery - Disable and Re-Enable Replication
+
+on:
+  workflow_dispatch:
+    inputs:
+      vmName:
+        description: 'Name of the VM to update replication'
+        required: true
+        type: string
+      sourceRegion:
+        description: 'Source Azure region'
+        required: true
+        type: string
+      sourceResourceGroup:
+        description: 'Source Resource Group'
+        required: true
+        type: string
+      targetRegion:
+        description: 'Target Azure region'
+        required: true
+        type: string
+      targetResourceGroup:
+        description: 'Target Resource Group'
+        required: true
+        type: string
+      targetVnetId:
+        description: 'Target VNet Resource ID'
+        required: true
+        type: string
+      recoverySubnetName:
+        description: 'Recovery Subnet Name'
+        required: true
+        type: string
+      replicationPolicyName:
+        description: 'Replication Policy Name'
+        required: true
+        type: string
+      vaultResourceGroup:
+        description: 'Recovery Vault Resource Group'
+        required: true
+        type: string
+      vaultName:
+        description: 'Recovery Vault Name'
+        required: true
+        type: string
+
+jobs:
+  asr-replication:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Disable Replication
+        shell: pwsh
+        run: |
+          ./scripts/disable-replication.ps1 `
+            -ResourceGroupName "${{ github.event.inputs.vaultResourceGroup }}" `
+            -RecoveryVaultName "${{ github.event.inputs.vaultName }}" `
+            -VMName "${{ github.event.inputs.vmName }}"
+
+      - name: Enable Replication
+        shell: pwsh
+        run: |
+          ./scripts/enable-replication.ps1 `
+            -ResourceGroupName "${{ github.event.inputs.vaultResourceGroup }}" `
+            -RecoveryVaultName "${{ github.event.inputs.vaultName }}" `
+            -VMName "${{ github.event.inputs.vmName }}" `
+            -SourceRegion "${{ github.event.inputs.sourceRegion }}" `
+            -SourceResourceGroup "${{ github.event.inputs.sourceResourceGroup }}" `
+            -TargetRegion "${{ github.event.inputs.targetRegion }}" `
+            -TargetResourceGroup "${{ github.event.inputs.targetResourceGroup }}" `
+            -TargetVnetId "${{ github.event.inputs.targetVnetId }}" `
+            -RecoverySubnetName "${{ github.event.inputs.recoverySubnetName }}" `
+            -ReplicationPolicyName "${{ github.event.inputs.replicationPolicyName }}"
 
