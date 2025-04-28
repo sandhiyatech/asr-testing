@@ -11,8 +11,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Azure CLI
-        uses: azure/setup-azurecli@v1
+      #- name: Set up Azure CLI
+      #  uses: azure/setup-azurecli@v1
 
       - name: Login to Azure 
         run: |
