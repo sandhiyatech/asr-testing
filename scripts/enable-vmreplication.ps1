@@ -94,7 +94,7 @@ $replicationDetails = @{
     PolicyId               = (Get-AzRecoveryServicesAsrPolicy -Name "24-hour-retention-policy").Id
     ProtectionContainerId  = (Get-AzRecoveryServicesAsrProtectionContainer -Name $TargetResourceGroupName).Id
     RecoveryResourceGroupId = (Get-AzResourceGroup -Name $TargetResourceGroupName).ResourceId
-    RecoveryAvailabilitySetId = $ReplicateAvailabilitySet
+    #RecoveryAvailabilitySetId = $ReplicateAvailabilitySet
     RecoveryCloudServiceId = $null
     RecoveryStorageAccountId = $CacheStorageAccountId
     RecoveryNetworkId      = $TargetNetworkId
@@ -102,7 +102,7 @@ $replicationDetails = @{
     SelectedRecoveryNicConfigurations = $nicDetails
     UseManagedDisks         = $true
     RecoveryAvailabilityType = "AvailabilitySet"
-    RecoveryStorageAccountType = $ReplicationStorageType
+    #RecoveryStorageAccountType = $ReplicationStorageType
 }
 
 New-AzRecoveryServicesAsrReplicationProtectedItem @replicationDetails

@@ -19,10 +19,10 @@ on:
       #  description: 'Azure Subscription ID'
       #  required: true
       #  type: string
-      policyName:
-        description: 'Azure ASR Policy Name'
-        required: true
-        type: string
+      #policyName:
+      #  description: 'Azure ASR Policy Name'
+      #  required: true
+      #  type: string
       targetResourceGroupName:
         description: 'Target Resource Group Name'
         required: true
@@ -47,14 +47,14 @@ on:
         description: 'Cache Storage Account ID'
         required: true
         type: string
-      replicationStorageType:
-        description: 'Replication Storage Type'
-        required: true
-        type: string
-      replicateAvailabilitySet:
-        description: 'Replicate Availability Set'
-        required: false
-        type: string
+      #replicationStorageType:
+      #  description: 'Replication Storage Type'
+      #  required: true
+      #  type: string
+      #replicateAvailabilitySet:
+      #  description: 'Replicate Availability Set'
+      #  required: false
+      #  type: string
       staticIP:
         description: 'Static IP Address'
         required: true
